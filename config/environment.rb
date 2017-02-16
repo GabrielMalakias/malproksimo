@@ -1,14 +1,18 @@
 require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
+
 require 'sidekiq'
+require 'sidekiq/web'
 
 require_relative '../lib/malproksimo'
 require_relative '../apps/web/application'
 require_relative './sidekiq'
 
 Hanami.configure do
+  mount Sidekiq::Web, at: '/sidekiq'
   mount Web::Application, at: '/'
+
 
   model do
     ##
