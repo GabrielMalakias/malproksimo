@@ -1,0 +1,4 @@
+project=malproksimo
+architecture=container
+test=rspec
+template=erb
