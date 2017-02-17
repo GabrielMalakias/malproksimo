@@ -23,7 +23,7 @@ services:
     build: .
     env_file:
       - .env.development
-    command: bundle exec hanami s --host '0.0.0.0'
+    command: bash -c "bundle exec hanami db migrate && bundle exec hanami s --host '0.0.0.0'"
     volumes:
       - .:/malproksimo
     ports:

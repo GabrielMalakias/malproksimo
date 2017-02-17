@@ -2,15 +2,21 @@ require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
 
+require 'dry-auto_inject'
 require 'sidekiq'
 require 'sidekiq/web'
 
+
+require_relative './initializers/dry_auto-inject'
+require_relative './initializers/dry-monads'
 require_relative '../lib/malproksimo'
+require_relative '../apps/api/application'
 require_relative '../apps/web/application'
 require_relative './sidekiq'
 
 Hanami.configure do
-  mount Sidekiq::Web, at: '/sidekiq'
+  mount Sidekiq::Web,     at: '/sidekiq'
+  mount Api::Application, at: '/api'
   mount Web::Application, at: '/'
 
 
