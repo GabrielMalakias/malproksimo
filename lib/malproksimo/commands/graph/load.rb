@@ -1,24 +1,15 @@
 module Commands
   module Graph
     class Load
+      include ::AutoInject['edges.repository']
+
       def call
         edges = repository.all
 
-        graph = ::Graph.new
-        graph.edges = edges
-
-        vertices(edges).map do |vertex|
-          graph.push vertex
-        end
-
-        graph
+        ::Graph.new(edges, vertices(edges))
       end
 
       private
-
-      def repository
-        EdgeRepository.new
-      end
 
       def vertices(edges)
         edges.inject([]) do |vertices, edge|

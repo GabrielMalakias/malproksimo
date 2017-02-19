@@ -33,6 +33,10 @@ module Malproksimo
     register('commands.shortest_path.calculate_or_retrieve') do
       Commands::ShortestPath::CalculateOrRetrieve.new
     end
+
+    register('commands.shortest_path.dijkstra.calculate_neighbors') do
+      Commands::ShortestPath::Dijkstra::CalculateNeighbor.new
+    end
   end
 end
 

@@ -3,7 +3,7 @@ module Cache
     include ::AutoInject['clients.redis']
 
     def find(origin, destination)
-      redis.get(cache_key(origin, destination))
+      redis.hget(prefix, cache_key(origin, destination))
     end
 
     def save(origin, destination, distance)

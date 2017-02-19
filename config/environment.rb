@@ -8,7 +8,6 @@ require 'sidekiq/web'
 
 
 require_relative './initializers/dry_auto-inject'
-require_relative './initializers/dry-monads'
 require_relative '../lib/malproksimo'
 require_relative '../apps/api/application'
 require_relative '../apps/web/application'

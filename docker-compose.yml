@@ -13,7 +13,7 @@ services:
     build: .
     env_file:
       - .env.development
-    command: bash -c "bundle exec sidekiq -e development -r ./config/environment.rb"
+    command: bash -c "bundle exec sidekiq -e development -r ./config/boot.rb"
     volumes:
       - .:/malproksimo
     depends_on:

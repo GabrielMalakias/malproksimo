@@ -9,7 +9,6 @@ gem 'pg'
 gem 'sidekiq'
 gem 'sinatra', '~> 1.4.6', require: false
 gem 'dry-auto_inject'
-gem 'dry-monads'
 
 
 group :development do

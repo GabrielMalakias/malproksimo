@@ -13,7 +13,7 @@ module Api::Controllers::Edges
       if params.valid?
         create_or_update_and_enqueue.(params)
 
-        status 201, "Created"
+        status 200, "Created or Updated"
       else
         status 412, params.error_messages
       end

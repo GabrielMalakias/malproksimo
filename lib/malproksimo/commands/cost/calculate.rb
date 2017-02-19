@@ -1,5 +1,7 @@
 module Commands
   module Cost
+    DistanceError = Class.new(StandardError)
+
     class Calculate
       include ::AutoInject['commands.shortest_path.calculate_or_retrieve']
 
@@ -8,7 +10,15 @@ module Commands
       def call(params)
         distance = calculate_or_retrieve.(params.get(:origin), params.get(:destination))
 
-        params.get(:weight) * FIXED_TAX * distance.to_f
+        raise_invalid_distance if distance.nil?
+
+        params.get(:weight) * FIXED_TAX * distance
+      end
+
+      private
+
+      def raise_invalid_distance
+        raise DistanceError, 'Invalid distance, please try to add more edges to calculate a possible route'
       end
     end
   end

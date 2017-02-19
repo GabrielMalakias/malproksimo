@@ -2,33 +2,27 @@ module Commands
   module ShortestPath
     module Dijkstra
       class Calculate
-        attr_accessor :graph
-
-        def initialize
-          @distances = {}
-          @previouses = {}
-        end
+        include ::AutoInject[
+          'commands.shortest_path.dijkstra.calculate_neighbors'
+        ]
 
         def call(graph, source, destination)
-          @graph = graph
+          vertices = graph.vertices.clone
 
-          define_infinity_distances
-
+          initialize_and_define_infinity_distances(graph.vertices)
           @distances[source] = 0
 
-          vertices = graph.clone
-
           until vertices.empty?
-            nearest_vertex  = nearest_vertex(vertices)
+            nearest_vertex  = calculate_nearest_vertex(vertices)
 
             break unless @distances[nearest_vertex]
 
             return @distances[destination] if destination and nearest_vertex == destination
 
-            neighbors = graph.neighbors(nearest_vertex)
+            neighbors = calculate_neighbors.(nearest_vertex, graph.edges)
 
             neighbors.each do |vertex|
-              alt = @distances[nearest_vertex] + vertices.length_between(nearest_vertex, vertex)
+              alt = @distances[nearest_vertex] + graph.length_between(nearest_vertex, vertex)
 
               if @distances[vertex].nil? or alt < @distances[vertex]
                 @distances[vertex] = alt
@@ -38,29 +32,27 @@ module Commands
             vertices.delete nearest_vertex
           end
 
-
-          if destination
-            return nil
-          else
-            return @distances
-          end
+          @distances unless destination
         end
 
         private
 
-        def nearest_vertex(vertices)
+        def initialize_and_define_infinity_distances(vertices)
+          @distances = {}
+          @previouses = {}
+
+          vertices.each do |vertex|
+            @distances[vertex] = nil
+            @previouses[vertex] = nil
+          end
+        end
+
+        def calculate_nearest_vertex(vertices)
           vertices.inject do |a, b|
             next b unless @distances[a]
             next a unless @distances[b]
             next a if @distances[a] < @distances[b]
             b
-          end
-        end
-
-        def define_infinity_distances
-          graph.each do |vertex|
-            @distances[vertex] = nil
-            @previouses[vertex] = nil
           end
         end
       end

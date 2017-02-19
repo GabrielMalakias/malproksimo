@@ -43,8 +43,8 @@ RSpec.describe Api::Controllers::Edges::Create do
     it 'is successful' do
       response = action.call(params)
 
-      expect(response[0]).to eq 201
-      expect(response[2]).to eq ["Created"]
+      expect(response[0]).to eq 200
+      expect(response[2]).to eq ["Created or Updated"]
     end
   end
 end
