@@ -6,10 +6,12 @@ gem 'hanami',       '~> 0.9'
 gem 'hanami-model', '~> 0.7'
 
 gem 'pg'
+gem 'sidekiq'
+gem 'sinatra', '~> 1.4.6', require: false
+gem 'dry-auto_inject'
+
 
 group :development do
-  # Code reloading
-  # See: http://hanamirb.org/guides/projects/code-reloading
   gem 'shotgun'
 end
 
@@ -23,5 +25,5 @@ group :test do
 end
 
 group :production do
-  # gem 'puma'
+#  gem 'puma'
 end
